@@ -1,0 +1,44 @@
+# Gagrileba.ge
+
+Gagrileba.ge is a Georgian HVAC ecommerce and service website for air conditioners, HVAC accessories, delivery, official warranty, and professional air conditioner installation in Tbilisi and across Georgia.
+
+Primary language: Georgian
+Supported languages: Georgian, English, Russian
+Business category: HVACBusiness, ecommerce, air conditioner installation
+Service area: Tbilisi and Georgia
+Phone: +995 551 10 30 55
+Address: Vaja Pshavela 78a, Tbilisi, Georgia
+
+Important pages:
+- Home: /
+- Products: /products
+- Air conditioners: /air-conditioners
+- Accessories: /accessories
+- Installation service: /installation
+- HVAC calculator: /calculator
+- Guides: /blog
+- Contact: /contact
+- Delivery policy: /delivery
+- Warranty: /warranty
+- Returns: /returns
+- Privacy: /privacy
+- Terms: /terms
+
+Product pages:
+- Product detail pages live under /products/{slug}
+- Product pages include price, brand, model, availability, warranty, recommended area, BTU or kW capacity, installation availability, and product schema markup.
+
+Payments:
+- Card payments and installments are handled through Bank of Georgia hosted checkout.
+- Installment customers choose the desired loan term during checkout.
+
+Supplier price sync:
+- Midea product availability and prices are synced from midea.ge.
+- Beko, Millen, Vox, and Aux products are synced from technoshop.ge when matching source products are available.
+- Supplier 404 or unavailable products are marked out of stock on Gagrileba.ge.
+
+Crawler policy:
+- Public storefront and guide pages may be crawled and indexed.
+- Admin, API, checkout, and cart pages should not be indexed.
+- OAI-SearchBot, ChatGPT-User, GPTBot, Googlebot, and ordinary search crawlers may access public pages.
+

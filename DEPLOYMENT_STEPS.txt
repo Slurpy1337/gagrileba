@@ -1,0 +1,196 @@
+GAGRILEBA.GE DEPLOYMENT STEPS
+=============================
+
+Target setup:
+- Database: Supabase Postgres
+- App hosting: Vercel
+- Source control: GitHub
+- Daily price sync: Vercel Cron at /api/cron/source-prices
+
+
+1. ROTATE SECRETS BEFORE PRODUCTION
+-----------------------------------
+
+Rotate the BOG secret key because it was pasted into chat during setup.
+Also rotate the Supabase database password if you pasted it anywhere public.
+
+
+2. INSTALL GIT
+--------------
+
+Install Git for Windows:
+https://git-scm.com/download/win
+
+After installing, restart PowerShell.
+
+
+3. GENERATE APP SECRETS
+-----------------------
+
+Run this twice:
+
+node -e "console.log(require('crypto').randomBytes(48).toString('base64'))"
+
+Use the first value as:
+AUTH_SECRET
+
+Use the second value as:
+CRON_SECRET
+
+
+4. CREATE GITHUB REPOSITORY
+---------------------------
+
+Create an empty GitHub repository.
+
+Then in PowerShell:
+
+cd C:\Users\Slurp\OneDrive\Documents\Gagrileba
+git init
+git add .
+git commit -m "Initial production deploy"
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+git branch -M main
+git push -u origin main
+
+Important:
+- Do not commit .env.
+- .env is already ignored by .gitignore.
+
+
+5. CREATE VERCEL PROJECT
+------------------------
+
+Go to:
+https://vercel.com
+
+Click:
+Add New -> Project
+
+Import the GitHub repository.
+
+Use these settings:
+- Framework Preset: Next.js
+- Install Command: npm install
+- Build Command: npm run build
+- Output Directory: leave empty/default
+
+
+6. ADD VERCEL ENVIRONMENT VARIABLES
+-----------------------------------
+
+In Vercel:
+Project -> Settings -> Environment Variables
+
+Add these to Production:
+
+DATABASE_URL="YOUR_SUPABASE_TRANSACTION_POOLER_URL"
+AUTH_SECRET="YOUR_GENERATED_AUTH_SECRET"
+CRON_SECRET="YOUR_GENERATED_CRON_SECRET"
+
+NEXT_PUBLIC_SITE_URL="https://YOUR-VERCEL-DOMAIN.vercel.app"
+NEXT_PUBLIC_COMPANY_PHONE="+995 551 10 30 55"
+NEXT_PUBLIC_COMPANY_EMAIL="gagrileba@gmail.com"
+NEXT_PUBLIC_MESSENGER_URL="https://m.me/gagrileba"
+NEXT_PUBLIC_WHATSAPP_URL="https://wa.me/995551103055"
+
+BOG_CLIENT_ID="10001925"
+BOG_CLIENT_SECRET="YOUR_ROTATED_BOG_SECRET"
+BOG_API_URL="https://api.bog.ge"
+BOG_AUTH_URL="https://oauth2.bog.ge/auth/realms/bog/protocol/openid-connect/token"
+BOG_CALLBACK_PUBLIC_KEY=""
+BOG_LOAN_TYPE="standard"
+
+ADMIN_LOGIN_PATH="/gagrileba-admin"
+SOURCE_SYNC_ARCHIVE_UNAVAILABLE="false"
+MIDEA_SYNC_ARCHIVE_UNAVAILABLE="false"
+
+For DATABASE_URL, use Supabase transaction-mode pooler:
+- Port: 6543
+- Include: ?pgbouncer=true
+
+
+7. DEPLOY
+---------
+
+Click Deploy in Vercel.
+
+After deployment, open:
+- /
+- /products
+- /air-conditioners
+- /checkout
+- /gagrileba-admin
+- /sitemap.xml
+- /robots.txt
+- /llms.txt
+
+/api/cron/source-prices should show Unauthorized in the browser.
+That is correct. Vercel Cron will call it with the secret Authorization header.
+
+
+8. UPDATE SITE URL
+------------------
+
+After the first deployment, copy the Vercel production URL.
+
+In Vercel environment variables, update:
+NEXT_PUBLIC_SITE_URL="https://YOUR-REAL-VERCEL-URL.vercel.app"
+
+Redeploy.
+
+When the real domain is connected, update again:
+NEXT_PUBLIC_SITE_URL="https://gagrileba.ge"
+
+Redeploy again.
+
+
+9. CONNECT DOMAIN
+-----------------
+
+In Vercel:
+Project -> Settings -> Domains
+
+Add:
+gagrileba.ge
+
+Follow Vercel's DNS instructions exactly.
+Usually this means:
+- A record for the root domain
+- CNAME record for www
+
+
+10. VERIFY AFTER DOMAIN IS LIVE
+-------------------------------
+
+Check:
+https://gagrileba.ge
+https://gagrileba.ge/products
+https://gagrileba.ge/sitemap.xml
+https://gagrileba.ge/robots.txt
+https://gagrileba.ge/llms.txt
+
+Then submit sitemap in Google Search Console:
+https://search.google.com/search-console
+
+Sitemap URL:
+https://gagrileba.ge/sitemap.xml
+
+
+11. IMPORTANT PRODUCTION NOTES
+------------------------------
+
+Do not run db:seed on production unless you intentionally want demo data.
+
+Supabase data has already been migrated.
+
+Vercel Cron is configured in vercel.json:
+/api/cron/source-prices runs daily at 02:00 UTC.
+That is 06:00 in Tbilisi.
+
+If products stop syncing, check:
+- Vercel Logs
+- CRON_SECRET
+- Supabase connection string
+- Supplier site availability
+
