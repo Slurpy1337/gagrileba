@@ -32,13 +32,7 @@ Payments:
 - Card payments and installments are handled through Bank of Georgia hosted checkout.
 - Installment customers choose the desired loan term during checkout.
 
-Supplier price sync:
-- Midea product availability and prices are synced from midea.ge.
-- Beko, Millen, Vox, and Aux products are synced from technoshop.ge when matching source products are available.
-- Supplier 404 or unavailable products are marked out of stock on Gagrileba.ge.
-
 Crawler policy:
 - Public storefront and guide pages may be crawled and indexed.
 - Admin, API, checkout, and cart pages should not be indexed.
 - OAI-SearchBot, ChatGPT-User, GPTBot, Googlebot, and ordinary search crawlers may access public pages.
-
