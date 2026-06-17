@@ -27,7 +27,6 @@ export const dictionary = {
       order: "შეკვეთა",
       buy: "შეძენა",
       backToProducts: "პროდუქტებში დაბრუნება",
-      officialPage: "ოფიციალური გვერდი",
       description: "აღწერა",
       included: "რა შედის",
       specs: "მახასიათებლები",
@@ -244,7 +243,7 @@ export const dictionary = {
   en: {
     brandName: "Gagrileba.ge",
     common: {
-      home: "Home", products: "Products", view: "View", order: "Order", buy: "Buy", backToProducts: "Back to products", officialPage: "Official page", description: "Description", included: "What is included", specs: "Specifications", related: "Related products", warranty: "Warranty", stock: "Stock", area: "Area", power: "Power", month: "month", agreed: "By agreement", phone: "Phone", email: "Email", hours: "Working hours", serviceArea: "Service area", call: "Call",
+      home: "Home", products: "Products", view: "View", order: "Order", buy: "Buy", backToProducts: "Back to products", description: "Description", included: "What is included", specs: "Specifications", related: "Related products", warranty: "Warranty", stock: "Stock", area: "Area", power: "Power", month: "month", agreed: "By agreement", phone: "Phone", email: "Email", hours: "Working hours", serviceArea: "Service area", call: "Call",
     },
     header: { search: "Search products", searchLabel: "Search", contact: "Contact", login: "Login", cart: "Cart", buy: "Shop", promo: "Deals", products: "Products", installation: "Installation" },
     nav: { conditioners: "Air conditioners", accessories: "Accessories", picker: "Calculator", guides: "Guides", contact: "Contact" },
@@ -269,7 +268,7 @@ export const dictionary = {
   },
   ru: {
     brandName: "Gagrileba.ge",
-    common: { home: "Главная", products: "Товары", view: "Смотреть", order: "Заказать", buy: "Купить", backToProducts: "Назад к товарам", officialPage: "Официальная страница", description: "Описание", included: "Что входит", specs: "Характеристики", related: "Похожие товары", warranty: "Гарантия", stock: "Наличие", area: "Площадь", power: "Мощность", month: "месяц", agreed: "По согласованию", phone: "Телефон", email: "Эл. почта", hours: "Рабочие часы", serviceArea: "Зона обслуживания", call: "Позвонить" },
+    common: { home: "Главная", products: "Товары", view: "Смотреть", order: "Заказать", buy: "Купить", backToProducts: "Назад к товарам", description: "Описание", included: "Что входит", specs: "Характеристики", related: "Похожие товары", warranty: "Гарантия", stock: "Наличие", area: "Площадь", power: "Мощность", month: "месяц", agreed: "По согласованию", phone: "Телефон", email: "Эл. почта", hours: "Рабочие часы", serviceArea: "Зона обслуживания", call: "Позвонить" },
     header: { search: "Поиск товаров", searchLabel: "Поиск", contact: "Контакт", login: "Войти", cart: "Корзина", buy: "Купить", promo: "Акции", products: "Товары", installation: "Монтаж" },
     nav: { conditioners: "Кондиционеры", accessories: "Аксессуары", picker: "Подбор", guides: "Гиды", contact: "Контакт" },
     home: { eyebrow: "Gagrileba.ge", title: "Охлаждение, которое чувствуется сразу", subtitle: "Кондиционеры, аксессуары и монтаж с понятными ценами, быстрой доставкой и гарантией.", conditioners: "Кондиционеры", installation: "Монтаж", trust: ["Быстрая доставка", "Точный монтаж", "Официальная гарантия", "Рассрочка"], productsEyebrow: "Товары", chooseDirection: "Выберите категорию", allProducts: "Все товары", view: "Смотреть", featured: "Избранные модели", bestsellers: "Бестселлеры", viewAll: "Смотреть все", roomArea: "Площадь комнаты", chooseSize: "Подбор по размеру", sizeText: "Фильтр по площади поможет сразу перейти к моделям подходящей мощности." },

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ExternalLink, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { LinkButton } from "@/components/ui/button";
+import { ProductGallery } from "@/components/product/product-gallery";
 import { ProductCard } from "@/components/product/product-card";
 import { fallbackImage } from "@/lib/content";
 import { getProductBySlug, getProducts } from "@/lib/data/products";
@@ -41,6 +41,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       ? `${product.recommendedAreaMin}-${product.recommendedAreaMax} m²`
       : t.common.agreed;
   const powerLabel = product.btu ? `${product.btu} BTU` : product.kw ? `${product.kw} kW` : product.model;
+  const galleryImages = [
+    { url: product.mainImageUrl || fallbackImage, alt: product.name },
+    ...product.images.map((image) => ({ url: image.url, alt: image.alt })),
+  ].filter((image, index, self) => self.findIndex((item) => item.url === image.url) === index);
   return (
     <section className="section bg-white">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(product)) }} />
@@ -57,14 +61,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <div className="container">
         <div className="mb-5 text-sm text-slate-500">{t.common.home} / {product.category.name} / {product.name}</div>
         <div className="grid gap-8 lg:grid-cols-2">
-          <div className="grid gap-3">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-100">
-              <Image src={product.mainImageUrl || fallbackImage} alt={product.name} fill className="object-cover" priority sizes="(max-width:1024px) 100vw, 50vw" />
-            </div>
-            <div className="grid grid-cols-4 gap-3">
-              {product.images.map((image) => <div key={image.id} className="relative aspect-square overflow-hidden rounded-md bg-slate-100"><Image src={image.url} alt={image.alt} fill className="object-cover" /></div>)}
-            </div>
-          </div>
+          <ProductGallery images={galleryImages} productName={product.name} />
           <div>
             <p className="text-sm font-black uppercase text-[#0ea5e9]">{product.brand.name} / {product.model}</p>
             <h1 className="mt-2 text-4xl font-black text-slate-950">{product.name}</h1>
@@ -85,7 +82,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               <LinkButton href={`/checkout?product=${product.slug}`} size="lg"><ShoppingCart size={18} /> {t.common.buy}</LinkButton>
               <LinkButton href="/products" variant="outline" size="lg">{t.common.backToProducts}</LinkButton>
-              {product.sourceUrl ? <LinkButton href={product.sourceUrl} variant="outline" size="lg"><ExternalLink size={18} /> {t.common.officialPage}</LinkButton> : null}
             </div>
           </div>
         </div>
