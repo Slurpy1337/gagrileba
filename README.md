@@ -200,6 +200,10 @@ Imported products start as `draft` so an admin can review pricing, images, specs
 
 `src/lib/payments/bog.ts` creates real Bank of Georgia hosted checkout orders when `BOG_CLIENT_ID` and `BOG_CLIENT_SECRET` are configured. Checkout `card` uses BOG card payment, and checkout `installment` uses BOG's `bog_loan` installment payment method with the customer's selected term. Webhooks update the local payment and order statuses. Add `BOG_CALLBACK_PUBLIC_KEY` in production to verify callback signatures.
 
+## Discord Admin Alerts
+
+Set `DISCORD_WEBHOOK_URL` to receive Discord alerts for checkout orders, lead/offer requests, and BOG payment status updates. The webhook is optional; if it is missing or Discord rejects a request, the app logs the issue and keeps the customer flow working.
+
 ## Analytics
 
 Server-side event logging lives in `EventLog` and `src/lib/analytics/events.ts`. The app records lead submissions, purchases, payment webhooks, and admin product creation. GA4, Meta Pixel, and Meta Conversions API can consume these events from the same abstraction.
@@ -302,6 +306,7 @@ BOG_CLIENT_ID=""
 BOG_CLIENT_SECRET=""
 BOG_CALLBACK_PUBLIC_KEY=""
 BOG_LOAN_TYPE="standard"
+DISCORD_WEBHOOK_URL=""
 CRON_SECRET="generate-another-long-random-secret"
 ADMIN_LOGIN_PATH="/gagrileba-admin"
 SOURCE_SYNC_ARCHIVE_UNAVAILABLE="false"

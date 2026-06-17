@@ -13,6 +13,7 @@ Target setup:
 
 Rotate the BOG secret key because it was pasted into chat during setup.
 Also rotate the Supabase database password if you pasted it anywhere public.
+Rotate the Discord webhook URL too if it was pasted anywhere public.
 
 
 2. INSTALL GIT
@@ -100,6 +101,8 @@ BOG_API_URL="https://api.bog.ge"
 BOG_AUTH_URL="https://oauth2.bog.ge/auth/realms/bog/protocol/openid-connect/token"
 BOG_CALLBACK_PUBLIC_KEY=""
 BOG_LOAN_TYPE="standard"
+
+DISCORD_WEBHOOK_URL="YOUR_DISCORD_WEBHOOK_URL"
 
 ADMIN_LOGIN_PATH="/gagrileba-admin"
 SOURCE_SYNC_ARCHIVE_UNAVAILABLE="false"
@@ -193,4 +196,3 @@ If products stop syncing, check:
 - CRON_SECRET
 - Supabase connection string
 - Supplier site availability
-

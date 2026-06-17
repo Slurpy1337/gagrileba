@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db/prisma";
 import { trackEvent } from "@/lib/analytics/events";
+import { notify } from "@/lib/notifications";
 import { providerForPaymentMethod } from "@/lib/payments";
 import { checkoutSchema } from "@/lib/validators/orders";
 
@@ -86,5 +87,32 @@ export async function POST(request: Request) {
     },
   });
   await trackEvent("purchase", { total: Number(order.total), paymentMethod: order.paymentMethod }, { type: "order", id: order.id });
+  await notify({
+    channel: "admin",
+    subject: `ახალი შეკვეთა ${order.orderNumber}`,
+    message: `${order.customerName} - ${order.phone}`,
+    url: `${siteUrl}/admin/orders`,
+    fields: [
+      { name: "სახელი", value: order.customerName, inline: true },
+      { name: "ტელეფონი", value: order.phone, inline: true },
+      { name: "ელფოსტა", value: order.email, inline: true },
+      { name: "ჯამი", value: `${Number(order.total)} GEL`, inline: true },
+      { name: "გადახდა", value: order.paymentMethod, inline: true },
+      { name: "გადახდის სტატუსი", value: providerPayment.status, inline: true },
+      { name: "განვადების თვე", value: data.installmentMonth, inline: true },
+      { name: "მონტაჟი", value: data.installationRequired, inline: true },
+      { name: "მისამართი", value: [order.city, order.district, order.address].filter(Boolean).join(", ") },
+      {
+        name: "პროდუქტები",
+        value: products
+          .map((product) => {
+            const quantity = quantityByProduct.get(product.id) ?? quantityByProduct.get(product.slug) ?? 1;
+            return `${quantity} x ${product.name} (${product.sku})`;
+          })
+          .join("\n"),
+      },
+      { name: "კომენტარი", value: order.notes },
+    ],
+  });
   return NextResponse.json({ orderId: order.id, orderNumber: order.orderNumber, paymentStatus: providerPayment.status, redirectUrl: providerPayment.redirectUrl });
 }

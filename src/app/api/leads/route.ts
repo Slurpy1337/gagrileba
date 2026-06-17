@@ -23,6 +23,22 @@ export async function POST(request: Request) {
     },
   });
   await trackEvent("lead_submit", { source: lead.source, phone: lead.phone }, { type: "lead", id: lead.id });
-  await notify({ channel: "admin", subject: "ახალი ლიდი", message: `${lead.name} - ${lead.phone}` });
+  await notify({
+    channel: "admin",
+    subject: "ახალი მოთხოვნა / შეთავაზება",
+    message: `${lead.name} - ${lead.phone}`,
+    fields: [
+      { name: "სახელი", value: lead.name, inline: true },
+      { name: "ტელეფონი", value: lead.phone, inline: true },
+      { name: "ელფოსტა", value: lead.email, inline: true },
+      { name: "წყარო", value: lead.source, inline: true },
+      { name: "პროდუქტი", value: lead.productInterest, inline: true },
+      { name: "ფართობი", value: lead.roomSize, inline: true },
+      { name: "ბიუჯეტი", value: lead.budget, inline: true },
+      { name: "სიჩქარე", value: lead.urgency, inline: true },
+      { name: "მონტაჟი", value: lead.installationNeeded, inline: true },
+      { name: "კომენტარი", value: lead.message },
+    ],
+  });
   return NextResponse.json({ leadId: lead.id });
 }

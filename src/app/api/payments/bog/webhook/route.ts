@@ -3,6 +3,7 @@ import type { Prisma } from "@prisma/client";
 import { createVerify } from "crypto";
 import { prisma } from "@/lib/db/prisma";
 import { env } from "@/lib/env";
+import { notify } from "@/lib/notifications";
 import { paymentProviders } from "@/lib/payments";
 
 function normalizePublicKey(key: string) {
@@ -55,6 +56,21 @@ export async function POST(request: Request) {
     } else if (result.status === "failed" || result.status === "cancelled") {
       await prisma.order.update({ where: { id: payment.orderId }, data: { paymentStatus: result.status, status: "payment_failed" } });
     }
+
+    await notify({
+      channel: "admin",
+      subject: `BOG გადახდა: ${result.status}`,
+      message: `${payment.order.orderNumber} - ${payment.order.customerName}`,
+      fields: [
+        { name: "შეკვეთა", value: payment.order.orderNumber, inline: true },
+        { name: "სტატუსი", value: result.status, inline: true },
+        { name: "თანხა", value: `${Number(payment.amount)} ${payment.currency}`, inline: true },
+        { name: "კლიენტი", value: payment.order.customerName, inline: true },
+        { name: "ტელეფონი", value: payment.order.phone, inline: true },
+        { name: "BOG ID", value: result.providerPaymentId, inline: true },
+      ],
+      color: result.status === "paid" ? 0x22c55e : 0xf97316,
+    });
   }
 
   await prisma.eventLog.create({
