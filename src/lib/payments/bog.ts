@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { env } from "@/lib/env";
 import type { CreatePaymentInput, PaymentProvider, ProviderPayment } from "./types";
+import { createBogBuyer, toJsonSafe } from "./bog-utils";
 
 type BogOrderResponse = {
   id?: string;
@@ -61,11 +62,7 @@ function createOrderPayload(input: CreatePaymentInput) {
   return {
     callback_url: input.callbackUrl,
     external_order_id: input.orderNumber,
-    buyer: {
-      full_name: input.customer.name,
-      masked_email: input.customer.email ?? undefined,
-      masked_phone: input.customer.phone,
-    },
+    buyer: createBogBuyer(input.customer),
     purchase_units: {
       currency: input.currency,
       total_amount: input.amount,
@@ -137,7 +134,7 @@ export const bogProvider: PaymentProvider = {
       providerPaymentId: result.id,
       status: "pending",
       redirectUrl: result._links?.redirect?.href,
-      rawPayload: { request: payload, response: result },
+      rawPayload: toJsonSafe({ request: payload, response: result }),
     };
   },
   async verifyPayment(providerPaymentId: string) {
