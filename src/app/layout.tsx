@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/next";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { MobileBar } from "@/components/layout/mobile-bar";
@@ -78,6 +79,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <main className="flex-1 pb-16 md:pb-0">{children}</main>
         <Footer />
         <MobileBar />
+        <Analytics />
       </body>
     </html>
   );
