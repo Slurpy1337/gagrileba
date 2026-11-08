@@ -2,10 +2,10 @@ export const site = {
   name: "Gagrileba.ge",
   geName: "გაგრილება.ჯი",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://gagrileba.ge",
-  phone: process.env.NEXT_PUBLIC_COMPANY_PHONE ?? "+995 551 10 30 55",
+  phone: process.env.NEXT_PUBLIC_COMPANY_PHONE ?? "+995 574 412 329",
   email: process.env.NEXT_PUBLIC_COMPANY_EMAIL ?? "gagrileba@gmail.com",
   messenger: process.env.NEXT_PUBLIC_MESSENGER_URL ?? "https://m.me/gagrileba",
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_URL ?? "https://wa.me/995551103055",
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_URL ?? "https://wa.me/995574412329",
   address: "ვაჟა ფშაველას 78ა, თბილისი, საქართველო",
   promise: "სწრაფად, მარტივად, გარანტიით.",
 };

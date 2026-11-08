@@ -114,7 +114,7 @@ async function main() {
     skipDuplicates: true,
   });
 
-  await prisma.setting.upsert({ where: { key: "company" }, update: {}, create: { key: "company", value: { phone: "+995 599 00 00 00", email: "info@gagrileba.ge", installationBasePrice: 150 } } });
+  await prisma.setting.upsert({ where: { key: "company" }, update: {}, create: { key: "company", value: { phone: "+995 574 412 329", email: "info@gagrileba.ge", installationBasePrice: 150 } } });
   await prisma.lead.create({ data: { name: "საცდელი ლიდი", phone: "+995 555 11 22 33", source: "seed", status: "new", productInterest: "Midea AF-12", assignedToId: admin.id } });
 }
 
